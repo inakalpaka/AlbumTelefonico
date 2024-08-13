@@ -1,0 +1,52 @@
+
+.movie-search {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    width: 200px;
+  }
+  
+  .error {
+    color: red;
+    margin: 10px 0;
+  }
+  
+  .movie-list,
+  .fixed-movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .movie-card {
+    background: #1b1a1a;
+    border: 1px solid #838282;
+    border-radius: 14px;
+    overflow: hidden;
+    width: 300px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .movie-poster {
+    width: 100%;
+    height: auto;
+  }
+  
+  .movie-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  
+  .movie-year {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+  }

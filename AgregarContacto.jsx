@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2'
+import Conexionbd from './Conexiondb';
 
 const AgregarContacto = () => {
   const [nombre, setNombre] = useState('');
@@ -15,91 +16,90 @@ const AgregarContacto = () => {
   const telefonoChange = (event) => {
     setTelefono(event.target.value);
   };
+
   const Guardar = () => {
     if (nombre.length > 100) {
-      console.log("el nombre es demaciado largo");
+      Swal.fire({
+        title: "Error!",
+        text: "El nombre es demaciado largo",
+        icon: "error"
+      });
     }
     else if (nombre.length < 5) {
-      console.log("el nombre es demaciado corto");
+      Swal.fire({
+        title: "Error!",
+        text: "El nombre es demaciado corto",
+        icon: "error"
+      });
     }
     else if (apellido.length > 100) {
-      console.log("el apellido es demaciado largo");
+      Swal.fire({
+        title: "Error!",
+        text: "El apellido es demaciado largo",
+        icon: "error"
+      });
     }
-    else if (nombre.length < 5) {
-      console.log("el apellido es demaciado corto");
+    else if (apellido.length < 5) {
+      Swal.fire({
+        title: "Error!",
+        text: "El apellido es demaciado corto",
+        icon: "error"
+      });
     }
-    else if (telefono == "351 123 4567") {
-      console.log("el numero no es valido");
+    else if (telefono == "asdfg") {
+      Swal.fire({
+        title: "Error!",
+        text: "El numero no es valido",
+        icon: "error"
+      });
+
     } else {
-      if (nombre == nobreEnBaseDeDatos && apellido == apellidoEnBaseDeDatos) { //comprobar si en nombre que quiero cargar existe en la base de datos 
-        if (numero == numeroEnBaseDeDatos) {
+      let resuesta = Conexionbd({ nombre, apellido, numero, excepcion: false });
+      if (resuesta != "Error") {
+        if (resuesta == "numero ya registrado") {
           Swal.fire({
-            title: "El Contacto existe deseas remoplazar el numero anterior?",
+            title: "Tenemos un Problema!",
+            text: "El numero ya esta registrado",
+            icon: "error"
+          });
+        } else if (respuesta == "el contacto existe con otro numero") {
+          Swal.fire({
+            title: "El Contacto ya existe deseas remoplazar el numero anterior?",
             showDenyButton: true,
             confirmButtonText: "Remplazar",
             denyButtonText: `Cancelar`
           }).then((result) => {
             if (result.isConfirmed) {
-              //remplazar numero viejo por numero nuevo en la base de datos
-              Swal.fire("Listo!", "Numero Remplazado", "Listo");
+              respuesta = Conexionbd({ nombre, apellido, numero, excepcion: true });
+              if (respuesta == "Error") {
+                Swal.fire({
+                  title: "Error!",
+                  text: "A ocurrido un Error",
+                  icon: "error"
+                });
+              } else {
+                Swal.fire({
+                  title: "Listo!",
+                  text: "El numero a sido actualizado con exito!",
+                  icon: "success"
+                });
+              }
+
             }
           });
-
+        } else if (respuesta == "numero agregado") {
+          Swal.fire({
+            title: "Felicidades!",
+            text: "Tu nuevo contacto se a guardado con exito!",
+            icon: "success"
+          });
         }
-      } else {
-        //agregar el nuevo contacto a la base de datos
-        Swal.fire({
-          title: "Felicidades!",
-          text: "Tu nuevo contacto se a guardado con exito!",
-          icon: "success"
-        });
       }
-
-      console.log("el nombre es: ");
-      console.log(nombre);
-      console.log("el apellido es: ");
-      console.log(apellido);
-      console.log("el telefono es: ");
-      console.log(telefono);
-      //guardar el json
-      //subirlo a la base de datos local
     }
-    console.log("el nombre es: ");
-    console.log(nombre);
-    console.log("el apellido es: ");
-    console.log(apellido);
-    console.log("el telefono es: ");
-    console.log(telefono);
   }
-  /* return (
- <div>
-       <h1>Formulario</h1>
-       <input
-         type="text"
-         value={nombre}
-         onChange={nombreChange}
-       />
-       <> </>
-       <input
-         type="text"
-         value={apellido}
-         onChange={apellidoChange}
-       />
-       <></>
-       <input
-         type="text"
-         value={telefono}
-         onChange={telefonoChange}
-       />
-       <></>
- 
-       <button onClick={Guardar}>Guardar</button>
- 
-     </div>
-     
-   );*/
+
   return (
-    <form onSubmit={Guardar}>
+    <form>
       <div>
         <label>
           Nombre:
@@ -133,7 +133,7 @@ const AgregarContacto = () => {
           />
         </label>
       </div>
-      <button type="submit">Guardar</button>
+      <button onClick={Guardar()} type="submit">Guardar</button>
     </form>
 
   );

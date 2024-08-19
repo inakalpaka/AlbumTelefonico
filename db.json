@@ -1,19 +1,22 @@
 {
   "posts": [
     {
-      "id": "1",
-      "title": "a title",
-      "views": 100
+      "id": 1,
+      "nombre": "juan",
+      "apellido": "galletano",
+      "telefono": "351 123 4567"
     },
     {
-      "id": "2",
-      "title": "another title",
-      "views": 200
+      "id": 2,
+      "nombre": "alejandro",
+      "apellido": "martinez",
+      "telefono": "351 123 8796"
     },
     {
-      "id": "6b68",
-      "title": "bla lba bla",
-      "content": "todos los viernes son santos"
+      "id": 3,
+      "nombre": "manulita",
+      "apellido": "alejandria",
+      "telefono": "351 123 1234"
     }
   ],
   "comments": [
